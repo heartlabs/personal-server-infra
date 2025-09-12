@@ -28,5 +28,5 @@ services:
 
 networks:
   needs-network:
-    external:
-      name: needs_network
+    name: needs_network
+    external: true
