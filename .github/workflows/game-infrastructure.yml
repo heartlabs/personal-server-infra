@@ -25,6 +25,7 @@ jobs:
         source: "docker/*"
         target: "/home/server/docker"
         strip_components: 1
+        debug: true
     - name: restart docker compose
       uses: appleboy/ssh-action@v0.1.10
       with:
