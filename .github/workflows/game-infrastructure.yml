@@ -15,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: heartlabs.tech
     steps:
-    - name: Show deploy user (debug only)
-      run: echo "${{ secrets.DEPLOY_USER }}"
     - uses: actions/checkout@v2
     - name: docker prune before deploy
       uses: appleboy/ssh-action@v0.1.10
