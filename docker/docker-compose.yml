@@ -16,6 +16,7 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     networks:
       - needs-network
+      - bugchess-network
   certbot:
     image: certbot/certbot
     restart: unless-stopped
@@ -29,4 +30,7 @@ services:
 networks:
   needs-network:
     name: needs_network
+    external: true
+  bugchess-network:
+    name: bugchess_network
     external: true
