@@ -15,7 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     environment: heartlabs.tech
     steps:
+    - name: Show deploy user (debug only)
+      run: echo "${{ secrets.DEPLOY_USER }}"
     - uses: actions/checkout@v2
+    - name: docker prune before deploy
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: v2202204174441188151.happysrv.de
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_USER_PASSWORD }}
+        script: docker system prune -af
     - name: copy docker-compose files via ssh
       uses: appleboy/scp-action@master
       with:
