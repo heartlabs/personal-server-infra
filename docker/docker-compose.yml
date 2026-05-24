@@ -7,7 +7,8 @@ services:
       - "3537:3537"
       - "3030:3030"
     volumes:
-      - /home/server/bugchess/html:/usr/share/nginx/html
+      - ./html:/usr/share/nginx/html
+      - /home/server/bugchess/html:/usr/share/nginx/bugchess
       - ./nginx:/etc/nginx/conf.d
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
