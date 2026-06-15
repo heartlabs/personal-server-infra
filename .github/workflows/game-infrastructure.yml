@@ -33,14 +33,7 @@ jobs:
         target: "/home/server/docker"
         strip_components: 1
         debug: true
-    - name: restart docker compose
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: v2202204174441188151.happysrv.de
-        username: ${{ secrets.DEPLOY_USER }}
-        password: ${{ secrets.DEPLOY_USER_PASSWORD }}
-        script: cd /home/server/docker && docker compose pull && docker compose build && docker compose up -d --remove-orphans --force-recreate
-    - name: ensure SSL certificate
+    - name: deploy and ensure SSL
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: v2202204174441188151.happysrv.de
@@ -48,10 +41,13 @@ jobs:
         password: ${{ secrets.DEPLOY_USER_PASSWORD }}
         script: |
           cd /home/server/docker
-          docker compose exec -T certbot certbot certonly --webroot -w /var/www/certbot \
+          docker compose pull
+          docker compose build
+          docker compose run --rm certbot certbot certonly --webroot -w /var/www/certbot \
             --non-interactive --agree-tos --email neidhart.orlich@gmail.com \
             --keep-until-expiring --expand \
             -d heartlabs.eu -d www.heartlabs.eu -d needs.heartlabs.eu -d blog.heartlabs.eu
+          docker compose up -d --remove-orphans --force-recreate
           docker compose exec -T nginx nginx -s reload
 
     
