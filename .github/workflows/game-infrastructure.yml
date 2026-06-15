@@ -43,9 +43,9 @@ jobs:
           cd /home/server/docker
           docker compose pull
           docker compose build
-          docker compose run --rm certbot certbot certonly --webroot -w /var/www/certbot \
+          docker compose run --rm --entrypoint "" certbot certbot certonly --webroot -w /var/www/certbot \
             --non-interactive --agree-tos --email neidhart.orlich@gmail.com \
-            --keep-until-expiring --expand \
+            --cert-name heartlabs.eu-0001 --keep-until-expiring \
             -d heartlabs.eu -d www.heartlabs.eu -d needs.heartlabs.eu -d blog.heartlabs.eu
           docker compose up -d --remove-orphans --force-recreate
           docker compose exec -T nginx nginx -s reload
