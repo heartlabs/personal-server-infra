@@ -53,4 +53,13 @@ jobs:
             --keep-until-expiring --expand \
             -d heartlabs.eu -d www.heartlabs.eu -d needs.heartlabs.eu -d blog.heartlabs.eu
           docker compose exec -T nginx nginx -s reload
+    - name: install server cleanup cron
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: v2202204174441188151.happysrv.de
+        username: ${{ secrets.DEPLOY_USER }}
+        password: ${{ secrets.DEPLOY_USER_PASSWORD }}
+        script: |
+          cp /home/server/docker/cron/server-cleanup /etc/cron.d/server-cleanup
+          chmod 644 /etc/cron.d/server-cleanup
     

@@ -1,0 +1,2 @@
+# Weekly server cleanup - clear old journals and apt cache
+0 3 * * 0 journalctl --vacuum-time=7d && apt-get clean
