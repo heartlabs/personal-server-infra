@@ -22,10 +22,7 @@ jobs:
         host: v2202204174441188151.happysrv.de
         username: ${{ secrets.DEPLOY_USER }}
         password: ${{ secrets.DEPLOY_USER_PASSWORD }}
-        script: |
-          docker system prune -af
-          journalctl --vacuum-time=7d
-          apt-get clean
+        script: docker system prune -af
     - name: copy docker-compose files via ssh
       uses: appleboy/scp-action@master
       with:
