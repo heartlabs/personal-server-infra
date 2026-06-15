@@ -18,6 +18,7 @@ services:
     networks:
       - needs-network
       - bugchess-network
+      - blog-network
   certbot:
     image: certbot/certbot
     restart: unless-stopped
@@ -27,6 +28,18 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+  grav:
+    image: getgrav/grav:latest
+    container_name: grav
+    restart: unless-stopped
+    volumes:
+      - grav_data:/var/www/html
+      - ./grav/install-plugins.sh:/docker-entrypoint.d/install-plugins.sh:ro
+    networks:
+      - blog-network
+
+volumes:
+  grav_data:
 
 networks:
   needs-network:
@@ -35,3 +48,4 @@ networks:
   bugchess-network:
     name: bugchess_network
     external: true
+  blog-network:

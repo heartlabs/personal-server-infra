@@ -1,11 +1,14 @@
 #!/bin/bash
+# One-time bootstrap script for initial server provisioning.
+# Creates a dummy cert so nginx can start, then replaces it with a real Let's Encrypt cert.
+# After first run, cert expansion/renewal is handled automatically by the CI pipeline.
 
 if ! [ -x "$(command -v docker)" ]; then
   echo 'Error: docker is not installed.' >&2
   exit 1
 fi
 
-domains=(heartlabs.eu www.heartlabs.eu needs.heartlabs.eu)
+domains=(heartlabs.eu www.heartlabs.eu needs.heartlabs.eu blog.heartlabs.eu)
 rsa_key_size=4096
 data_path="./docker/certbot"
 email="neidhart.orlich@gmail.com" # Adding a valid address is strongly recommended
