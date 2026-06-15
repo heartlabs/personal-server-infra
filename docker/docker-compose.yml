@@ -31,6 +31,8 @@ services:
   grav:
     image: getgrav/grav:latest
     container_name: grav
+    environment:
+      - FIX_PERMISSIONS=true
     restart: unless-stopped
     volumes:
       - grav_data:/var/www/html
